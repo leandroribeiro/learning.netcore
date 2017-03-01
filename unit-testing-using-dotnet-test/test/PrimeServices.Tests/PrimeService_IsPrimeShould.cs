@@ -53,7 +53,7 @@ namespace Prime.UnitTests.Services
         { 
             var result = _primeService.IsPrime(value); 
  
-            Assert.False(result, $"{value} should not be prime"); 
+            Assert.False(result, $"{value} should NOT be prime"); 
         }
 
     }//class
