@@ -17,5 +17,6 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\PrimeService\PrimeService.csproj" />
+    <ProjectReference Include="..\Prime.Entities\Prime.Entities.csproj" />
   </ItemGroup>
 </Project>

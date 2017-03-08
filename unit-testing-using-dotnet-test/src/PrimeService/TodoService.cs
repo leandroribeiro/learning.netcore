@@ -1,34 +1,24 @@
-
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
 using System.Net.Http.Headers;
-using Newtonsoft.Json;
 using System.Text;
-using Microsoft.Extensions.Configuration;
+using System.Threading.Tasks;
+using Newtonsoft.Json;
 using Microsoft.Extensions.Options;
 
-namespace PrimeService.API.Controllers
+namespace Prime.Services
 {
-    [Route("api/[controller]")]
-    public class TestController : Controller
+    public class TodoService
     {
-        IOptions<Prime.Entities.TODOSettings> _configuration;
-        private Prime.Services.TodoService _service;
+        private readonly IOptions<Prime.Entities.TODOSettings> _serviceSettings;
 
-        public TestController(IOptions<Prime.Entities.TODOSettings> configuration, Prime.Services.TodoService service)
-        {
-            _configuration = configuration;
-            _service = service;
+        public TodoService(IOptions<Prime.Entities.TODOSettings> serviceSettings){
+            _serviceSettings = serviceSettings;
         }
-
-        [HttpGet("~/api/local/test")]
-        public async Task<string> GetDataExternalAPI()
+        public async Task<string> GetAll()
         {
-            //var baseAddress = "https://jsonplaceholder.typicode.com/todos";
-            var baseAddress = _configuration.Value.BaseAddress;
+            var baseAddress = _serviceSettings.Value.BaseAddress;
 
             HttpClient client = new HttpClient();
             HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, baseAddress);
@@ -38,7 +28,7 @@ namespace PrimeService.API.Controllers
             if (response.IsSuccessStatusCode)
             {
                 List<Dictionary<String, String>> responseElements = new List<Dictionary<String, String>>();
-                //JsonSerializerSettings settings = new JsonSerializerSettings();
+                JsonSerializerSettings settings = new JsonSerializerSettings();
                 String responseString = await response.Content.ReadAsStringAsync();
 
                 /*responseElements = JsonConvert.DeserializeObject<List<Dictionary<String, String>>>(responseString, settings);
@@ -56,19 +46,16 @@ namespace PrimeService.API.Controllers
             }
             else
                 return "error";
-
         }
 
-        [HttpPost("~/api/local/test")]
-        public async Task<string> GetDataExternalAPIAuth()
+        public async Task<string> GetAll(string username, string password)
         {
-            var baseAddress = "https://jsonplaceholder.typicode.com/todos";
+            var baseAddress = _serviceSettings.Value.BaseAddress;
 
             HttpClient client = new HttpClient();
             HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, baseAddress);
 
-
-            var authByteArray = Encoding.ASCII.GetBytes("username:password");
+            var authByteArray = Encoding.ASCII.GetBytes($"{username}:{password}");
             var authString = Convert.ToBase64String(authByteArray);
             //httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", authString);
             request.Headers.Authorization = new AuthenticationHeaderValue("Basic", authString);
@@ -96,13 +83,7 @@ namespace PrimeService.API.Controllers
             }
             else
                 return "error";
-
         }
 
-        [HttpGet("~/api/service/test")]
-        public async Task<string> GetDataServiceAPI()
-        {
-            return await _service.GetAll();
-        }
     }
 }

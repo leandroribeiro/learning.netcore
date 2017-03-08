@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 
 namespace PrimeService.API
 {
@@ -30,6 +31,9 @@ namespace PrimeService.API
         {
             // Add framework services.
             services.AddMvc();
+
+            services.Configure<Prime.Entities.TODOSettings>(Configuration.GetSection("TODOSettings"));
+            services.TryAddScoped<Prime.Services.TodoService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -40,7 +44,6 @@ namespace PrimeService.API
             loggerFactory.AddDebug();
 
             app.UseMvc();
-
         }
     }
 }
