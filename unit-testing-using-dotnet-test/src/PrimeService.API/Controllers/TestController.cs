@@ -17,14 +17,45 @@ namespace PrimeService.API.Controllers
         {
         }
 
-        // GET api/vendor
-        [HttpGet]
-        public async Task<string> Get()
+        [HttpGet("~/api/test")]
+        public async Task<string> GetDataExternalAPI()
         {
-            var baseAddress = "https://www.something.com.br/api/someone";
+            var baseAddress = "https://jsonplaceholder.typicode.com/todos";
 
-            // Retrieve the user's To Do List.
-            //
+            HttpClient client = new HttpClient();
+            HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, baseAddress);
+
+            HttpResponseMessage response = await client.SendAsync(request);
+
+            if (response.IsSuccessStatusCode)
+            {
+                List<Dictionary<String, String>> responseElements = new List<Dictionary<String, String>>();
+                JsonSerializerSettings settings = new JsonSerializerSettings();
+                String responseString = await response.Content.ReadAsStringAsync();
+
+                /*responseElements = JsonConvert.DeserializeObject<List<Dictionary<String, String>>>(responseString, settings);
+                foreach (Dictionary<String, String> responseElement in responseElements)
+                {
+                    TodoItem newItem = new TodoItem();
+                    newItem.Title = responseElement["title"];
+                    newItem.Owner = responseElement["owner"];
+                    itemList.Add(newItem);
+                }
+
+                return View(itemList);*/
+
+                return responseString;
+            }
+            else
+                return "error";
+
+        }
+
+        [HttpPost("~/api/test")]
+        public async Task<string> GetDataExternalAPIAuth()
+        {
+            var baseAddress = "https://jsonplaceholder.typicode.com/todos";
+
             HttpClient client = new HttpClient();
             HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, baseAddress);
 
@@ -36,9 +67,6 @@ namespace PrimeService.API.Controllers
 
             HttpResponseMessage response = await client.SendAsync(request);
 
-            //
-            // Return the To Do List in the view.
-            //
             if (response.IsSuccessStatusCode)
             {
                 List<Dictionary<String, String>> responseElements = new List<Dictionary<String, String>>();
