@@ -27,7 +27,6 @@ namespace PrimeService.API.Controllers
         [HttpGet("~/api/local/test")]
         public async Task<string> GetDataExternalAPI()
         {
-            //var baseAddress = "https://jsonplaceholder.typicode.com/todos";
             var baseAddress = _configuration.Value.BaseAddress;
 
             HttpClient client = new HttpClient();
@@ -60,15 +59,15 @@ namespace PrimeService.API.Controllers
         }
 
         [HttpPost("~/api/local/test")]
-        public async Task<string> GetDataExternalAPIAuth()
+        public async Task<string> GetDataExternalAPIAuth(string username, string password)
         {
-            var baseAddress = "https://jsonplaceholder.typicode.com/todos";
+            var baseAddress = _configuration.Value.BaseAddress;
 
             HttpClient client = new HttpClient();
             HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, baseAddress);
 
 
-            var authByteArray = Encoding.ASCII.GetBytes("username:password");
+            var authByteArray = Encoding.ASCII.GetBytes($"{username}:{password}");
             var authString = Convert.ToBase64String(authByteArray);
             //httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", authString);
             request.Headers.Authorization = new AuthenticationHeaderValue("Basic", authString);

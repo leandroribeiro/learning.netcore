@@ -61,7 +61,7 @@ namespace PrimeServices.IntegrationTests
             var responseString = await response.Content.ReadAsStringAsync();
 
             // Assert
-            Assert.Equal($"{value} should not be prime", responseString);
+            Assert.Equal($"{value} should NOT be prime", responseString);
         }
 
         [Theory] 
