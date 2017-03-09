@@ -12,16 +12,9 @@ namespace PrimeService.API.Controllers
     {
         private Prime.Domain.PrimeService _service;
 
-        public ValuesController()
-        {
-            this._service = new Prime.Domain.PrimeService();
+        public ValuesController(Prime.Domain.PrimeService service){
+            this._service = service;
         }
-
-        /*
-                public ValuesController(Prime.Services.PrimeService service){
-                    this._service = service;
-                }
-        */
 
         // GET api/values
         [HttpGet]
@@ -37,25 +30,8 @@ namespace PrimeService.API.Controllers
             if (_service.IsPrime(id))
                 return $"{id} should be prime";
 
-            return $"{id} should not be prime";
+            return $"{id} should NOT be prime";
         }
 
-        // POST api/values
-        [HttpPost]
-        public void Post([FromBody]string value)
-        {
-        }
-
-        // PUT api/values/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody]string value)
-        {
-        }
-
-        // DELETE api/values/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
-        }
     }
 }

@@ -34,6 +34,7 @@ namespace PrimeService.API
 
             services.Configure<Prime.Entities.TODOSettings>(Configuration.GetSection("TODOSettings"));
             services.TryAddScoped<Prime.Domain.TodoService>();
+            services.TryAddScoped<Prime.Domain.PrimeService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
