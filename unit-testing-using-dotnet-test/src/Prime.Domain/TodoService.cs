@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Microsoft.Extensions.Options;
 
-namespace Prime.Services
+namespace Prime.Domain
 {
     public class TodoService
     {

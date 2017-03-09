@@ -3,18 +3,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Prime.Services;
+using Prime.Domain;
 
 namespace PrimeService.API.Controllers
 {
     [Route("api/[controller]")]
     public class ValuesController : Controller
     {
-        private Prime.Services.PrimeService _service;
+        private Prime.Domain.PrimeService _service;
 
         public ValuesController()
         {
-            this._service = new Prime.Services.PrimeService();
+            this._service = new Prime.Domain.PrimeService();
         }
 
         /*

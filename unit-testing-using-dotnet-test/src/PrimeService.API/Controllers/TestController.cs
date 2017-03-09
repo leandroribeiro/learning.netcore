@@ -16,9 +16,9 @@ namespace PrimeService.API.Controllers
     public class TestController : Controller
     {
         IOptions<Prime.Entities.TODOSettings> _configuration;
-        private Prime.Services.TodoService _service;
+        private Prime.Domain.TodoService _service;
 
-        public TestController(IOptions<Prime.Entities.TODOSettings> configuration, Prime.Services.TodoService service)
+        public TestController(IOptions<Prime.Entities.TODOSettings> configuration, Prime.Domain.TodoService service)
         {
             _configuration = configuration;
             _service = service;

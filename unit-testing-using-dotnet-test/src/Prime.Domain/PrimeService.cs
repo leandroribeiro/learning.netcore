@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Prime.Services
+namespace Prime.Domain
 {
     public class PrimeService
     {
