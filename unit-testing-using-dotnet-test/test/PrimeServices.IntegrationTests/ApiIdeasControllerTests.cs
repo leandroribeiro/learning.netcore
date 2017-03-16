@@ -31,6 +31,8 @@ namespace PrimeServices.IntegrationTests
             // Assert
             response.EnsureSuccessStatusCode();
 
+            //var responseValue = await response.Content.ReadAsStringAsync();
+
             var todoList = JsonConvert.DeserializeObject<List<Todo>>(
                     await response.Content.ReadAsStringAsync());
             var firstIdea = todoList.First();
